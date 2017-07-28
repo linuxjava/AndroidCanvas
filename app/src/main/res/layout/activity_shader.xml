@@ -28,8 +28,7 @@
         <com.example.robincxiao.androidcanvas.shader.LinearGradientView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/holo_orange_light" />
+            android:layout_marginTop="10dp" />
 
         <com.example.robincxiao.androidcanvas.shader.LinearGradientSample
             android:layout_width="wrap_content"
