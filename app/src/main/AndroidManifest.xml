@@ -27,6 +27,12 @@
 
         <activity android:name=".path.PathMeasureActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".curve.CurveActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".svg.SVGActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

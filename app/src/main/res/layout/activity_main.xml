@@ -32,4 +32,18 @@
         android:text="PathMeasure"
         android:onClick="onPathMeasure"
         android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Curve"
+        android:onClick="onCurve"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SVG"
+        android:onClick="onSVG"
+        android:textAllCaps="false"/>
 </LinearLayout>
