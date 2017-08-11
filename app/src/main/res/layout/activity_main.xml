@@ -46,4 +46,25 @@
         android:text="SVG"
         android:onClick="onSVG"
         android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Matrix"
+        android:onClick="onMatrix"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clip"
+        android:onClick="onClip"
+        android:textAllCaps="false"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Text"
+        android:onClick="onText"
+        android:textAllCaps="false"/>
 </LinearLayout>
