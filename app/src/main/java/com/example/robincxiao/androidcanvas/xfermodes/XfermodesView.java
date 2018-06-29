@@ -17,7 +17,7 @@ import android.view.View;
  * Created by robincxiao on 2017/6/23.
  */
 
-public class XfermodesView extends View{
+public class XfermodesView extends View {
     private static final Xfermode[] sModes = {
             new PorterDuffXfermode(PorterDuff.Mode.CLEAR),
             new PorterDuffXfermode(PorterDuff.Mode.SRC),
@@ -55,11 +55,12 @@ public class XfermodesView extends View{
         init(context);
     }
 
-    private void init(Context context){
+    private void init(Context context) {
         mPaint = new Paint();
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 
-    public void setIndex(int index){
+    public void setIndex(int index) {
         mIndex = index;
     }
 
@@ -75,22 +76,12 @@ public class XfermodesView extends View{
 
     // create a bitmap with a rect, used for the "src" image
     static Bitmap makeSrc(int w, int h) {
-        Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Bitmap bm = Bitmap.createBitmap(w/2, h/2, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bm);
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         p.setColor(0xFF66AAFF);
         c.drawRect(w / 3, h / 3, w * 19 / 20, h * 19 / 20, p);
-        return bm;
-    }
-
-    static Bitmap makeTest() {
-        Bitmap bm = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bm);
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-        p.setColor(0xFFFFCC44);
-        c.drawOval(new RectF(0, 0, 200, 200), p);
         return bm;
     }
 
@@ -105,30 +96,15 @@ public class XfermodesView extends View{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawColor(Color.BLACK);
-        int sc = canvas.saveLayer(0, 0, W, H, null, Canvas.MATRIX_SAVE_FLAG |
-                Canvas.CLIP_SAVE_FLAG |
-                Canvas.HAS_ALPHA_LAYER_SAVE_FLAG |
-                Canvas.FULL_COLOR_LAYER_SAVE_FLAG |
-                Canvas.CLIP_TO_LAYER_SAVE_FLAG);
+        canvas.drawColor(Color.GREEN);
 
+        int sc = canvas.saveLayer(0, 0, W, H, null, Canvas.ALL_SAVE_FLAG);
 
-        /**
-         * Xfermode使用注意：Dst可以是bitmap或直接用canvas绘制图像，但是Src必须为Bitmap，否则Xfermode无效果
-         */
         canvas.drawBitmap(makeDst(W, H), 0, 0, mPaint);
-//        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        p.setStyle(Paint.Style.FILL);
-//        p.setColor(0xFFFFCC44);
-//        canvas.drawOval(new RectF(0, 0, W * 3 / 4, W * 3 / 4), p);
 
-
-        mPaint.setXfermode(sModes[mIndex]);
+        //mPaint.setXfermode(sModes[mIndex]);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         canvas.drawBitmap(makeSrc(W, H), 0, 0, mPaint);
-//        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        p.setStyle(Paint.Style.FILL);
-//        p.setColor(0xFF66AAFF);
-//        canvas.drawRect(W / 3, H / 3, W * 19 / 20, H * 19 / 20, p);
 
         mPaint.setXfermode(null);
 
