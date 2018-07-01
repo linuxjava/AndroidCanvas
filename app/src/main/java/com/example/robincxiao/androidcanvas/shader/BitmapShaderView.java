@@ -55,7 +55,7 @@ public class BitmapShaderView extends View {
         mBitmapHeight = bitmap.getHeight();
 
         mMatrix = new Matrix();
-        mShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        mShader = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 
     }
 
@@ -64,19 +64,6 @@ public class BitmapShaderView extends View {
         super.onLayout(changed, left, top, right, bottom);
         mWidth = getWidth();
         mHeight = getHeight();
-
-        /**
-         * 使用BitmapShader去渲染时，需要考虑一个问题，view的大小和bitmap并不匹配时，如何处理？
-         * 1.获取view宽高的最小值
-         * 2.获取bitmap宽高的最小值
-         * 3.根据要绘制的图形以及1、2中的两个值，计算bitmap与view缩放比率
-         */
-        mViewMin = Math.min(mWidth, mHeight);
-        mBitmapMin = Math.min(mBitmapWidth, mBitmapHeight);
-
-        float ratio = mViewMin * 1.0f / mBitmapMin;
-        mMatrix.setScale(ratio, ratio);
-        mShader.setLocalMatrix(mMatrix);
     }
 
     /**
@@ -88,10 +75,9 @@ public class BitmapShaderView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawColor(Color.GRAY);
-        mPaint.setShader(mShader);
 
-        canvas.drawCircle(mViewMin / 2, mViewMin / 2, mViewMin / 2, mPaint);
+
+        test3(canvas);
 
         /**
          * 使用如下方式有问题，问题原因如下:
@@ -101,4 +87,62 @@ public class BitmapShaderView extends View {
 //        canvas.translate(mViewMin / 2, mViewMin / 2);
 //        canvas.drawCircle(0, 0, mViewMin / 2, mPaint);
     }
+
+    private void test0(Canvas canvas){
+        canvas.drawColor(Color.GRAY);
+        mPaint.setShader(mShader);
+        canvas.drawRect(0, 0, mBitmapWidth, mBitmapHeight, mPaint);
+    }
+
+    private void test1(Canvas canvas){
+        mViewMin = Math.min(mWidth, mHeight);
+        mBitmapMin = Math.min(mBitmapWidth, mBitmapHeight);
+
+        float ratio = mViewMin * 1.0f / mBitmapMin;
+        mMatrix.setScale(ratio, ratio);
+        mShader.setLocalMatrix(mMatrix);
+
+        canvas.drawColor(Color.GRAY);
+        mPaint.setShader(mShader);
+
+        canvas.drawRect(0, 0, mWidth, mHeight, mPaint);
+    }
+
+    private void test2(Canvas canvas){
+        mViewMin = Math.min(mWidth, mHeight);
+        mBitmapMin = Math.min(mBitmapWidth, mBitmapHeight);
+
+        float ratio = mViewMin * 1.0f / mBitmapMin;
+        mMatrix.setScale(ratio, ratio);
+        mShader.setLocalMatrix(mMatrix);
+
+        canvas.drawColor(Color.GRAY);
+        mPaint.setShader(mShader);
+
+        canvas.drawCircle(mViewMin / 2, mViewMin / 2, mViewMin / 2, mPaint);
+    }
+
+    private void test3(Canvas canvas){
+        mViewMin = Math.min(mWidth, mHeight);
+        mBitmapMin = Math.min(mBitmapWidth, mBitmapHeight);
+
+        float ratio = mViewMin * 1.0f / mBitmapMin;
+        mMatrix.setScale(ratio, ratio);
+        mShader.setLocalMatrix(mMatrix);
+
+        canvas.drawColor(Color.GRAY);
+        mPaint.setShader(mShader);
+
+        canvas.translate(mViewMin / 2, mViewMin / 2);
+        //canvas.drawCircle(0, 0, mViewMin / 2, mPaint);
+        canvas.drawRect(0, 0, mViewMin / 2, mViewMin / 2, mPaint);
+    }
+
+
+    /**
+     * 使用BitmapShader去渲染时，需要考虑一个问题，view的大小和bitmap并不匹配时，如何处理？
+     * 1.获取view宽高的最小值
+     * 2.获取bitmap宽高的最小值
+     * 3.根据要绘制的图形以及1、2中的两个值，计算bitmap与view缩放比率
+     */
 }
