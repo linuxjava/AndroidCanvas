@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
@@ -18,7 +17,6 @@ import com.example.robincxiao.androidcanvas.R;
 
 /**
  * Created by robincxiao on 2017/6/23.
- *
  */
 
 public class BitmapShaderView extends View {
@@ -56,7 +54,6 @@ public class BitmapShaderView extends View {
 
         mMatrix = new Matrix();
         mShader = new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-
     }
 
     @Override
@@ -66,35 +63,21 @@ public class BitmapShaderView extends View {
         mHeight = getHeight();
     }
 
-    /**
-     * canvas.translate后再使用mShader去画圆是有问题的，暂不清楚为什么
-     *
-     * @param canvas
-     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
-
-        test3(canvas);
-
-        /**
-         * 使用如下方式有问题，问题原因如下:
-         * BitmapShader默认是是从画布的坐标原点（左上角）开始绘制bitmap图像的，因为将translate移动到中心后，它就开始从中心点开始
-         * 绘制图像，所以导致只有圆的右下角有正确的图像，其它三块都是图像边缘像素的拉升
-         */
-//        canvas.translate(mViewMin / 2, mViewMin / 2);
-//        canvas.drawCircle(0, 0, mViewMin / 2, mPaint);
+        test0(canvas);
     }
 
-    private void test0(Canvas canvas){
+    private void test0(Canvas canvas) {
         canvas.drawColor(Color.GRAY);
         mPaint.setShader(mShader);
-        canvas.drawRect(0, 0, mBitmapWidth, mBitmapHeight, mPaint);
+        canvas.translate(mWidth/2, mHeight/2);
+        canvas.drawRect(-mBitmapWidth/2, -mBitmapHeight/2, mBitmapWidth/2, mBitmapHeight/2, mPaint);
     }
 
-    private void test1(Canvas canvas){
+    private void test1(Canvas canvas) {
         mViewMin = Math.min(mWidth, mHeight);
         mBitmapMin = Math.min(mBitmapWidth, mBitmapHeight);
 
@@ -108,7 +91,7 @@ public class BitmapShaderView extends View {
         canvas.drawRect(0, 0, mWidth, mHeight, mPaint);
     }
 
-    private void test2(Canvas canvas){
+    private void test2(Canvas canvas) {
         mViewMin = Math.min(mWidth, mHeight);
         mBitmapMin = Math.min(mBitmapWidth, mBitmapHeight);
 
@@ -122,7 +105,7 @@ public class BitmapShaderView extends View {
         canvas.drawCircle(mViewMin / 2, mViewMin / 2, mViewMin / 2, mPaint);
     }
 
-    private void test3(Canvas canvas){
+    private void test3(Canvas canvas) {
         mViewMin = Math.min(mWidth, mHeight);
         mBitmapMin = Math.min(mBitmapWidth, mBitmapHeight);
 
@@ -137,12 +120,4 @@ public class BitmapShaderView extends View {
         //canvas.drawCircle(0, 0, mViewMin / 2, mPaint);
         canvas.drawRect(0, 0, mViewMin / 2, mViewMin / 2, mPaint);
     }
-
-
-    /**
-     * 使用BitmapShader去渲染时，需要考虑一个问题，view的大小和bitmap并不匹配时，如何处理？
-     * 1.获取view宽高的最小值
-     * 2.获取bitmap宽高的最小值
-     * 3.根据要绘制的图形以及1、2中的两个值，计算bitmap与view缩放比率
-     */
 }

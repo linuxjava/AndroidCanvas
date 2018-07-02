@@ -48,10 +48,10 @@ public class SweepGradientView extends View{
 //        mSweepGradient = new SweepGradient(mWidth/2, mHeight/2, Color.RED, Color.BLUE);
 
         //注意：通过translate改变坐标系之后，setRotate和SweepGradient的中心点参考坐标系也随之改变
-        matrix.setRotate(30, 0, 0);
+        //matrix.setRotate(30, 0, 0);
         mSweepGradient = new SweepGradient(0, 0, Color.RED, Color.BLUE);
 
-        mSweepGradient.setLocalMatrix(matrix);
+        //mSweepGradient.setLocalMatrix(matrix);
         mPaint.setShader(mSweepGradient);
     }
 
@@ -66,9 +66,9 @@ public class SweepGradientView extends View{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.translate(mWidth/2, mHeight/2);
-        canvas.drawCircle(0, 0, mWidth/2, mPaint);
-        //canvas.drawCircle(mWidth/2, mHeight/2, mWidth/2, mPaint);
+//        canvas.translate(mWidth/2, mHeight/2);
+//        canvas.drawCircle(0, 0, mWidth/2, mPaint);
+        canvas.drawCircle(mWidth/2, mHeight/2, mWidth/2, mPaint);
 
     }
 }

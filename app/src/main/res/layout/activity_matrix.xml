@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <com.example.robincxiao.androidcanvas.matrix.ZoomImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:scaleType="matrix"
-        app:srcCompat="@mipmap/ic_test"
-        android:visibility="gone"/>
+        app:srcCompat="@mipmap/ic_test" />
 
     <com.example.robincxiao.androidcanvas.matrix.SetPolyToPoly
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"/>
 </LinearLayout>
